@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="Supabase OWASP Security Audit skill">
+  <rect width="1280" height="320" fill="#15171C"/>
+  <rect x="0" y="0" width="10" height="320" fill="#1D9E75"/>
+  <g transform="translate(1040,70)">
+    <path d="M90 0 L170 30 L170 95 C170 150 134 188 90 200 C46 188 10 150 10 95 L10 30 Z" fill="#1A1D23" stroke="#2E323B" stroke-width="2"/>
+    <path d="M58 96 l22 22 l44 -52" fill="none" stroke="#1D9E75" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="64" y="120" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="50" font-weight="600" fill="#F4F2EC">Supabase OWASP Audit</text>
+  <text x="66" y="162" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" fill="#A7ABB4">Auditoria de segurança alinhada ao OWASP Top 10:2025</text>
+  <text x="66" y="194" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" fill="#A7ABB4">código + banco ao vivo · relatório no chat + wireframes</text>
+  <g font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="600">
+    <rect x="64" y="230" width="168" height="40" rx="20" fill="#1F222A" stroke="#3A3E47"/>
+    <text x="86" y="256" fill="#E7E5DE">OWASP 2025</text>
+    <rect x="244" y="230" width="132" height="40" rx="20" fill="#1F222A" stroke="#3A3E47"/>
+    <text x="266" y="256" fill="#E7E5DE">Supabase</text>
+    <rect x="388" y="230" width="196" height="40" rx="20" fill="#1F222A" stroke="#3A3E47"/>
+    <text x="410" y="256" fill="#E7E5DE">somente leitura</text>
+  </g>
+</svg>

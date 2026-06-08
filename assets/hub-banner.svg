@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="Thiago Feral Skills">
+  <rect width="1280" height="320" fill="#15171C"/>
+  <rect x="0" y="0" width="10" height="320" fill="#FF5724"/>
+  <g fill="none" stroke="#2A2D34" stroke-width="1">
+    <circle cx="1080" cy="160" r="40"/>
+    <circle cx="1080" cy="160" r="78"/>
+    <circle cx="1080" cy="160" r="116"/>
+  </g>
+  <circle cx="1080" cy="160" r="10" fill="#FF5724"/>
+  <circle cx="1080" cy="82" r="6" fill="#4698CA"/>
+  <circle cx="1158" cy="160" r="6" fill="#1D9E75"/>
+  <circle cx="1080" cy="238" r="6" fill="#EF9F27"/>
+  <text x="64" y="132" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="58" font-weight="600" fill="#F4F2EC">Thiago Feral Skills</text>
+  <text x="66" y="178" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="24" fill="#A7ABB4">Coleção de skills para o Claude — Web e Claude Code</text>
+  <g font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="600">
+    <rect x="64" y="214" width="190" height="40" rx="20" fill="#1F222A" stroke="#3A3E47"/>
+    <text x="86" y="240" fill="#E7E5DE">SKILL.md format</text>
+    <rect x="266" y="214" width="150" height="40" rx="20" fill="#1F222A" stroke="#3A3E47"/>
+    <text x="288" y="240" fill="#E7E5DE">claude.ai</text>
+    <rect x="428" y="214" width="170" height="40" rx="20" fill="#1F222A" stroke="#3A3E47"/>
+    <text x="450" y="240" fill="#E7E5DE">Claude Code</text>
+  </g>
+</svg>
