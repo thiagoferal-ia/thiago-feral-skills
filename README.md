@@ -7,6 +7,7 @@
   <img src="https://img.shields.io/badge/skills-1-4698CA" alt="skills">
   <img src="https://img.shields.io/badge/formato-SKILL.md-FF5724" alt="SKILL.md">
   <img src="https://img.shields.io/badge/Claude-Web%20%2B%20Code-8A63D2" alt="Claude Web + Code">
+  <a href="https://thiagoferal.com"><img src="https://img.shields.io/badge/site-thiagoferal.com-111111" alt="thiagoferal.com"></a>
 </p>
 
 # Thiago Feral Skills
@@ -113,3 +114,9 @@ Detalhes e convenções em **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 
 [MIT](LICENSE). Use, adapte e compartilhe. As skills são material de orientação — revise as saídas antes
 de agir, especialmente em contextos de segurança.
+
+---
+
+<p align="center">
+  Feito por <b>Thiago Feral</b> · <a href="https://thiagoferal.com">thiagoferal.com</a>
+</p>
