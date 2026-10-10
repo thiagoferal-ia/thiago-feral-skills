@@ -41,6 +41,7 @@ sem você precisar "chamá-las" — embora você sempre possa pedir explicitamen
 | Skill | O que faz | Superfícies | Requisitos |
 |---|---|---|---|
 | [**supabase-owasp-audit**](skills/supabase-owasp-audit/) | Auditoria de segurança de um app com Supabase, alinhada ao **OWASP Top 10:2025**, cruzando o código com o banco ao vivo. Entrega relatório no chat com wireframes + dois `.md` (auditoria e plano de correção). | Web · Claude Code | Supabase conectado + ZIP do repositório |
+| [**music-master**](skills/music-master/) | Masterização por gênero, volume padronizado (LUFS/pico real), comparação A/B nivelada, organização de álbum (renumeração, tags, gênero por faixa, capa) e exportação WAV/MP3 para YouTube, streaming ou distribuidora. Qualquer gênero e origem (Suno, DAW…). | Claude Code | Node 18+ e ffmpeg |
 
 > Novas skills entram aqui conforme forem criadas. Veja [CONTRIBUTING.md](CONTRIBUTING.md) para o padrão.
 
