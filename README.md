@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-2ea44f" alt="MIT">
-  <img src="https://img.shields.io/badge/skills-1-4698CA" alt="skills">
+  <img src="https://img.shields.io/badge/skills-3-4698CA" alt="skills">
   <img src="https://img.shields.io/badge/formato-SKILL.md-FF5724" alt="SKILL.md">
   <img src="https://img.shields.io/badge/Claude-Web%20%2B%20Code-8A63D2" alt="Claude Web + Code">
   <a href="https://thiagoferal.com"><img src="https://img.shields.io/badge/site-thiagoferal.com-111111" alt="thiagoferal.com"></a>
@@ -40,7 +40,8 @@ sem você precisar "chamá-las" — embora você sempre possa pedir explicitamen
 
 | Skill | O que faz | Superfícies | Requisitos |
 |---|---|---|---|
-| [**supabase-owasp-audit**](skills/supabase-owasp-audit/) | Auditoria de segurança de um app com Supabase, alinhada ao **OWASP Top 10:2025**, cruzando o código com o banco ao vivo. Entrega relatório no chat com wireframes + dois `.md` (auditoria e plano de correção). | Web · Claude Code | Supabase conectado + ZIP do repositório |
+| [**auditoria-de-sistema**](skills/auditoria-de-sistema/) | Auditoria de segurança e prontidão: OWASP ASVS, API Security Top 10, **banco ao vivo** e **logs de produção**, com verificação obrigatória de cada achado. Pontua estrutura (A) e produto (B) de 0 a 10, placar OWASP Top 10 e veredito "pronto para clientes?". Tem modo de reauditoria. | Web · Claude Code | Repositório; banco e logs de produção (recomendado) |
+| [**avaliacao-trafego-meta**](skills/avaliacao-trafego-meta/) | Nota de 0 a 10 e veredito (escalar, manter, aguardar ou pausar) para campanhas, conjuntos e anúncios de **venda direta** no Meta Ads, com limiares de lucro derivados dos números do negócio. | Web · Claude Code | Dados das campanhas |
 | [**music-master**](skills/music-master/) | Masterização por gênero, volume padronizado (LUFS/pico real), comparação A/B nivelada, organização de álbum (renumeração, tags, gênero por faixa, capa) e exportação WAV/MP3 para YouTube, streaming ou distribuidora. Qualquer gênero e origem (Suno, DAW…). | Claude Code | Node 18+ e ffmpeg |
 
 > Novas skills entram aqui conforme forem criadas. Veja [CONTRIBUTING.md](CONTRIBUTING.md) para o padrão.
@@ -59,11 +60,11 @@ thiago-feral-skills/
 ├── assets/
 │   └── hub-banner.svg
 └── skills/
-    └── supabase-owasp-audit/
+    └── auditoria-de-sistema/
         ├── SKILL.md              ← o que o Claude carrega
         ├── README.md             ← documentação para humanos
         ├── references/           ← material de apoio, sob demanda
-        └── assets/
+        └── scripts/ · evals/     ← opcionais
 ```
 
 ---
@@ -78,7 +79,7 @@ Resumo:
 
 1. Compacte a pasta da skill em um ZIP:
    ```bash
-   cd skills && zip -r supabase-owasp-audit.zip supabase-owasp-audit
+   cd skills && zip -r auditoria-de-sistema.zip auditoria-de-sistema
    ```
 2. No claude.ai: **Customize → Skills → "+" → "+ Create skill"** e faça **upload do ZIP**.
 3. Deixe a skill **ligada** no toggle. Pronto.
@@ -90,7 +91,7 @@ Resumo:
 ```bash
 git clone https://github.com/<SEU-USUARIO>/thiago-feral-skills.git
 mkdir -p ~/.claude/skills
-cp -r thiago-feral-skills/skills/supabase-owasp-audit ~/.claude/skills/
+cp -r thiago-feral-skills/skills/auditoria-de-sistema ~/.claude/skills/
 ```
 Inicie uma nova sessão (`claude`) e peça a tarefa. Skill pessoal vale em todos os projetos; para
 compartilhar com o time, copie para `<repo>/.claude/skills/` (vai junto no git).
@@ -104,7 +105,7 @@ compartilhar com o time, copie para `<repo>/.claude/skills/` (vai junto no git).
 
 1. Crie `skills/<nome-da-skill>/SKILL.md` (com `name` e `description` no cabeçalho).
 2. Adicione `references/` se precisar de material de apoio carregado sob demanda.
-3. Escreva um `README.md` da skill (use o da `supabase-owasp-audit` como modelo).
+3. Escreva um `README.md` da skill (use o da `auditoria-de-sistema` como modelo).
 4. Registre a skill na tabela do catálogo acima.
 
 Detalhes e convenções em **[CONTRIBUTING.md](CONTRIBUTING.md)**.

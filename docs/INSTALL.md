@@ -1,7 +1,7 @@
 # Guia de instalação de skills
 
 Este guia vale para qualquer skill deste repositório. Os exemplos usam a skill
-`supabase-owasp-audit`, mas o procedimento é o mesmo para as demais — basta trocar o nome.
+`auditoria-de-sistema`, mas o procedimento é o mesmo para as demais — basta trocar o nome.
 
 > **Importante:** skills **não sincronizam entre superfícies**. Uma skill instalada no claude.ai
 > não aparece automaticamente no Claude Code (e vice-versa). Instale em cada lugar onde for usar.
@@ -20,7 +20,7 @@ Uma skill é uma **pasta** com um arquivo `SKILL.md` (instruções + um cabeçal
 possa pedir explicitamente.
 
 ```
-supabase-owasp-audit/
+auditoria-de-sistema/
 ├── SKILL.md            ← obrigatório (o Claude lê isto)
 └── references/         ← carregado sob demanda
     └── ...
@@ -37,7 +37,7 @@ A skill é enviada como um **arquivo ZIP** contendo a pasta da skill.
    - Baixe/clone este repositório e compacte a pasta da skill:
      ```bash
      cd skills
-     zip -r supabase-owasp-audit.zip supabase-owasp-audit
+     zip -r auditoria-de-sistema.zip auditoria-de-sistema
      ```
 2. No claude.ai, abra **Customize → Skills** (em algumas contas: *Settings → Capabilities → Skills*).
 3. Clique em **"+"** e depois em **"+ Create skill"**.
@@ -51,8 +51,8 @@ A skill é enviada como um **arquivo ZIP** contendo a pasta da skill.
 
 ### Empacotar / renomear
 
-- O `.skill` é um ZIP. Para transformá-lo em `.zip`: `cp supabase-owasp-audit.skill supabase-owasp-audit.zip`.
-- Para criar do zero a partir da pasta: `zip -r supabase-owasp-audit.zip supabase-owasp-audit`.
+- O `.skill` é um ZIP. Para transformá-lo em `.zip`: `cp auditoria-de-sistema.skill auditoria-de-sistema.zip`.
+- Para criar do zero a partir da pasta: `zip -r auditoria-de-sistema.zip auditoria-de-sistema`.
 
 ---
 
@@ -74,23 +74,23 @@ git clone https://github.com/<voce>/thiago-feral-skills.git
 
 # instale como skill PESSOAL (vale em todos os projetos)
 mkdir -p ~/.claude/skills
-cp -r thiago-feral-skills/skills/supabase-owasp-audit ~/.claude/skills/
+cp -r thiago-feral-skills/skills/auditoria-de-sistema ~/.claude/skills/
 
 # ou instale só NESTE projeto (compartilha com o time via git)
 mkdir -p .claude/skills
-cp -r /caminho/thiago-feral-skills/skills/supabase-owasp-audit .claude/skills/
+cp -r /caminho/thiago-feral-skills/skills/auditoria-de-sistema .claude/skills/
 ```
 
 ### Opção 2 — link simbólico (a skill acompanha o repo atualizado)
 
 ```bash
-ln -s "$(pwd)/thiago-feral-skills/skills/supabase-owasp-audit" ~/.claude/skills/supabase-owasp-audit
+ln -s "$(pwd)/thiago-feral-skills/skills/auditoria-de-sistema" ~/.claude/skills/auditoria-de-sistema
 ```
 
 ### Verificar
 
 ```bash
-ls ~/.claude/skills/supabase-owasp-audit/SKILL.md   # deve existir
+ls ~/.claude/skills/auditoria-de-sistema/SKILL.md   # deve existir
 ```
 
 Inicie uma **nova sessão** do Claude Code (`claude`) e peça algo que case com a descrição
@@ -101,7 +101,7 @@ Inicie uma **nova sessão** do Claude Code (`claude`) e peça algo que case com 
 Para desativar temporariamente, renomeie a pasta com um underscore na frente (o Claude ignora):
 
 ```bash
-mv ~/.claude/skills/supabase-owasp-audit ~/.claude/skills/_supabase-owasp-audit
+mv ~/.claude/skills/auditoria-de-sistema ~/.claude/skills/_auditoria-de-sistema
 ```
 
 Renomeie de volta para reativar.
@@ -118,7 +118,7 @@ Renomeie de volta para reativar.
 
 - **A skill não carrega:** confirme que `SKILL.md` está **diretamente** dentro de
   `~/.claude/skills/<skill>/` — e não aninhado um nível a mais (ex.:
-  `~/.claude/skills/supabase-owasp-audit/supabase-owasp-audit/SKILL.md` está **errado**).
+  `~/.claude/skills/auditoria-de-sistema/auditoria-de-sistema/SKILL.md` está **errado**).
 - **Não dispara sozinha:** descreva a tarefa em vez de tarefas triviais; o Claude tende a usar skills
   em pedidos substantivos. Você também pode pedir explicitamente para usar a skill.
 - **Mudou de superfície e sumiu:** skills não sincronizam — reinstale na outra superfície.

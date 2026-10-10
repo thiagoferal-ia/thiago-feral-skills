@@ -7,7 +7,7 @@ Cada skill é uma pasta dentro de `skills/` com um `SKILL.md` na raiz.
 ```
 skills/<nome-da-skill>/
 ├── SKILL.md            # obrigatório: cabeçalho YAML (name, description) + instruções
-├── README.md           # documentação para humanos (use a supabase-owasp-audit como modelo)
+├── README.md           # documentação para humanos (use a auditoria-de-sistema como modelo)
 ├── references/         # opcional: material carregado sob demanda
 └── assets/             # opcional: banners, imagens
 ```
