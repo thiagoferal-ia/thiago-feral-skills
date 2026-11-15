@@ -8,9 +8,9 @@ description: >-
   ou reduzir uma campanha, entender ou interpretar métricas (ROAS, CPA, CPM, CTR,
   frequência, gancho, retenção), diagnosticar por que um anúncio vende pouco, ou
   comparar o desempenho de vários anúncios — mesmo que ele não peça a palavra
-  score explicitamente. Funciona para qualquer produto e anunciante: coleta os
-  números do negócio numa entrevista rápida e deriva os limiares de lucro
-  automaticamente.
+  score explicitamente. Feita para contas brasileiras (valores em R$) e qualquer
+  produto: coleta os números do negócio numa entrevista rápida, em linguagem
+  simples, e deriva os limiares de lucro automaticamente.
 ---
 
 # Avaliação de Tráfego Meta — Score e Veredito (Venda Direta)
@@ -53,18 +53,17 @@ Esta skill cobre **apenas campanhas de venda direta** (objetivo Vendas/Compras, 
 
 Obtenha a config de um destes dois modos:
 
-**Modo entrevista** (primeira vez). Faça estas perguntas, em linguagem simples (o usuário pode não ser gestor de tráfego). Uma pergunta por vez se ele preferir:
+**Modo entrevista** (primeira vez). A skill é feita para contas brasileiras: todos os valores são em **reais (R$)**. Quem responde pode nunca ter mexido com tráfego, então faça uma pergunta por vez, com o exemplo e a dica de onde achar o número:
 
-| Campo | Pergunta |
-| --- | --- |
-| `moeda` | Qual a moeda da conta? |
-| `ticket_bruto` | Por quanto você vende o produto? |
-| `liquido_por_venda` | Quanto você recebe líquido por venda, depois das taxas da plataforma/checkout? |
-| `imposto_midia` | Há imposto ou taxa sobre o valor gasto em anúncios na sua região? Qual %? |
-| `valor_pixel` | Que valor o pixel registra por compra? (Normalmente o ticket bruto.) |
-| `margem_operacao` | Com quanta folga de lucro você quer operar? (Padrão: 30%.) |
+| Campo | Pergunta | Ajuda para quem não sabe |
+| --- | --- | --- |
+| `ticket_bruto` | Por quanto você vende o produto? | O preço que aparece na página de venda. Ex.: R$ 197 |
+| `liquido_por_venda` | Quanto cai na sua conta por venda, depois das taxas da plataforma de pagamento? | Na Hotmart, Kiwify, Eduzz, Mercado Pago etc., abra uma venda no extrato e veja o valor líquido. Ex.: vendeu R$ 197, recebeu R$ 180 |
+| `imposto_midia` | Quanto de imposto a Meta cobra em cima do que você investe em anúncios? | No Brasil a Meta soma impostos ao valor investido, e na fatura costuma dar perto de 12% a 13%. O número exato está em Gerenciador de Anúncios → Cobrança → uma fatura. Na dúvida, use 12% |
+| `valor_pixel` | Que valor a Meta registra para cada compra? | No Gerenciador, divida a coluna "Valor de conversão da compra" pela coluna "Compras". Quase sempre é o preço cheio do produto |
+| `margem_operacao` | Quanto do lucro você quer garantir, no mínimo? | É a folga de segurança. Quem não sabe responder usa 30% |
 
-Se o usuário não souber `imposto_midia`, assuma 0% e avise que o resultado real pode ser pior. Se não souber `valor_pixel`, assuma `ticket_bruto`.
+Se o usuário não souber `imposto_midia`, use 12% e diga que é uma estimativa. Se não souber `valor_pixel`, use `ticket_bruto`. Se não souber `liquido_por_venda`, peça o nome da plataforma de pagamento e o preço, e estime com a taxa padrão dela, avisando que é estimativa.
 
 **Modo config salva.** Se o usuário colar um bloco de config de uma sessão anterior, use-o e pule a entrevista.
 
@@ -112,7 +111,20 @@ Se houver conector do Meta disponível, puxe os dados; senão, peça os números
 
 **Regra de ouro:** decida no nível de **anúncio ou conjunto**, nunca só no de campanha. A nota de campanha é uma média que esconde um anúncio ruim puxando os bons. Sempre desça um nível antes de decidir.
 
-Métricas a coletar: investido, impressões, alcance, frequência, cliques totais, cliques no link, compras (vendas), valor de conversão/ROAS, e — para vídeo — reproduções de 3s e thruplays.
+Métricas a coletar: investido, impressões, alcance, frequência, cliques totais, cliques no link, compras (vendas), valor de conversão/ROAS, e — para vídeo — reproduções de 3s e thruplays. Pergunte também o **formato** de cada anúncio (vídeo ou imagem estática), porque a nota de Eficiência muda conforme o formato.
+
+### Sem conector: como o usuário tira os números do Gerenciador
+
+Quando não há conector, passe este roteiro ao usuário, em linguagem simples (os nomes dos menus podem mudar um pouco com as atualizações da Meta):
+
+1. Abra o **Gerenciador de Anúncios** e entre na aba **Anúncios** (não em Campanhas).
+2. Escolha o período no canto superior direito. Deixe de fora hoje e ontem, porque esses dias ainda recebem vendas atrasadas.
+3. Clique em **Colunas → Personalizar colunas** e marque: Valor usado, Impressões, Alcance, Frequência, Cliques (todos), Cliques no link, Compras, Valor de conversão da compra, Reproduções de vídeo de 3 segundos e ThruPlays.
+4. Na mesma tela, confira a **janela de atribuição**: o padrão é "7 dias após o clique ou 1 dia após a visualização". Use sempre a mesma janela de uma análise para a outra.
+5. Para ver a tendência, use **Detalhamento → Por tempo → Dia**.
+6. Envie de um destes jeitos: **Relatórios → Exportar dados da tabela** (arquivo .csv ou .xlsx), uma captura de tela da tabela, ou os números copiados.
+
+Se o usuário mandar uma captura de tela, leia os números dela e confirme com ele os que ficarem ilegíveis antes de calcular.
 
 ---
 
@@ -142,13 +154,13 @@ Há duas classes de métrica.
 
 **Universais** (propriedades do leilão da Meta — as faixas não dependem do produto):
 
-| Métrica | 🔴 0–3 | 🟡 4–6 | 🟢 7–8 | ⭐ 9–10 |
+| Métrica | 🔴 nota 0–3 | 🟡 nota 3–6 | 🟢 nota 6–8 | ⭐ nota 8–10 |
 | --- | --- | --- | --- | --- |
-| CPM (moeda local) | > 70 | 50–70 | 35–50 | < 35 |
+| CPM (R$) | > 70 | 50–70 | 35–50 | < 35 |
 | CTR total | < 1,5% | 1,5–2,5% | 2,5–3,5% | > 3,5% |
-| Gancho 3s | < 15% | 15–25% | — | > 25% |
+| Gancho 3s | < 15% | 15–25% | 25–35% | > 35% |
 
-> Se a conta opera num mercado de CPM estruturalmente diferente, multiplique as faixas de CPM por um fator regional (pergunte o CPM médio histórico da conta). CTR e gancho não mudam entre mercados.
+> As faixas de CPM são do mercado brasileiro médio. Se o nicho é caro por natureza (o CPM médio histórico da conta fica bem acima de R$ 70), multiplique as faixas de CPM por um fator `F` = CPM médio da conta ÷ 50, ou calibre pela própria conta (Passo 1B).
 
 **Derivadas do negócio** (faixas calculadas no Passo 1):
 
@@ -158,6 +170,8 @@ Há duas classes de métrica.
 | CPA | > CPA_empate | saudável → empate | saudável×0,72 → saudável | < saudável×0,72 |
 
 As **funções exatas de pontuação** (interpolação dentro de cada faixa) estão em `references/pontuacao.md`. Consulte-as quando precisar de notas numéricas precisas; para uma leitura rápida, o semáforo já basta.
+
+**Cor de uma nota** (vale para toda nota da skill, de métrica, Resultado, Eficiência ou Nota geral, e coincide com as faixas acima): nota ≥ 6 → 🟢 verde · nota de 3 a 5,9 → 🟡 amarelo · nota < 3 → 🔴 vermelho.
 
 ---
 
@@ -181,7 +195,7 @@ CTR de link, conversão de página e retenção **não** entram na nota — são
 | Fase | Vendas | Peso Resultado | Peso Eficiência |
 | --- | --- | --- | --- |
 | Teste | < 10 | 25% | 75% |
-| Validação | 10–50 | 50% | 50% |
+| Validação | 10–49 | 50% | 50% |
 | Produção | ≥ 50 | 70% | 30% |
 
 `Nota geral = Resultado × peso_R + Eficiência × peso_E`
@@ -195,11 +209,11 @@ CTR de link, conversão de página e retenção **não** entram na nota — são
 | Diagnóstico | 🔴 | 🟡 | 🟢 |
 | --- | --- | --- | --- |
 | CTR de link | < 0,8% | 0,8–1,3% | > 1,3% |
-| CPC de link (moeda local) | > 3 | 2–3 | < 2 |
+| CPC de link (R$) | > 3 | 2–3 | < 2 |
 | Conversão da página | < 2% | 2–4% | > 4% (‼ > 8% = atribuição inflada) |
 | Retenção de vídeo | < 15% | 15–30% | > 30% |
 | Lucro real | negativo | ~0 | positivo |
-| Confiança (nº de vendas) | < 10 | 10–50 | ≥ 50 |
+| Confiança (nº de vendas) | < 10 | 10–49 | ≥ 50 |
 
 Leitura-chave: **CTR de link fraco = problema no anúncio; CTR de link bom mas conversão de página baixa = problema na página/oferta.** Separar os dois evita trocar a peça errada.
 
@@ -218,13 +232,15 @@ Leitura-chave: **CTR de link fraco = problema no anúncio; CTR de link bom mas c
 
 Avalie na ordem — o **primeiro** que bater define o veredito:
 
-1. **Vendas = 0 e investido ≥ ~3 × CPA_empate** → **PAUSAR** (stop-loss).
-2. **Eficiência < 3** → **PAUSAR** (o leilão rejeitou o criativo: entrega cara/fraca).
+1. **Vendas < 10 e investido ≥ (vendas + 3) × CPA_empate** → **PAUSAR** (stop-loss). Com 0 vendas, o limite é 3 × CPA_empate; com 1 venda, 4 ×; com 2 vendas, 5 ×, e assim por diante. Gastar esse tanto com tão poucas vendas já prova prejuízo, sem precisar esperar a amostra.
+2. **Vendas < 10 e Eficiência < 3** → **PAUSAR** (em teste, o leilão rejeitou o criativo: entrega cara/fraca e sem vendas que compensem).
 3. **Vendas < 10** → **AGUARDAR** (amostra insuficiente; deixe amadurecer, olhe os sinais estáveis).
-4. **ROAS < ROAS_empate e vendas ≥ 10** → **PAUSAR / REDUZIR** (abaixo do empate com dado suficiente: perde dinheiro).
+4. **ROAS < ROAS_empate** → **PAUSAR / REDUZIR** (abaixo do empate com dado suficiente: perde dinheiro).
 5. **ROAS entre empate e saudável** → **MANTER / OTIMIZAR** (lucra, margem apertada).
 6. **ROAS ≥ ROAS_saudável e vendas ≥ 50** → **ESCALAR** (subir verba 20–30% a cada 48–72h).
-7. **ROAS ≥ ROAS_saudável e vendas 10–50** → **QUASE LÁ** (saudável, mas ainda aprendendo; continue antes de escalar forte).
+7. **ROAS ≥ ROAS_saudável e vendas 10–49** → **QUASE LÁ** (saudável, mas ainda aprendendo; continue antes de escalar forte).
+
+**Eficiência baixa em anúncio com 10 vendas ou mais não pausa.** Quem já vende com lucro não deve ser desligado só porque o CPM subiu ou a frequência cresceu: quem manda é o dinheiro. Nesse caso, mantenha o veredito da árvore e acrescente o alerta **"criativo cansando: prepare a troca"** (renovar o criativo ou abrir público novo), e não escale enquanto a Eficiência estiver abaixo de 3.
 
 Sempre acompanhe o veredito de uma justificativa em uma frase (qual regra decidiu).
 
@@ -269,7 +285,7 @@ Produza, para cada entidade avaliada:
 5. **Tendência**, se houver histórico.
 6. **Bloco de config** + **`.md` de continuidade** — templates em `references/wireframes.md`. O bloco de config permite reusar sem refazer a entrevista; o `.md` de continuidade guarda o snapshot desta sessão para alimentar a tendência na próxima. **O snapshot leva farol (🟢/🟡/🔴) em cada métrica, colunas financeiras (Investido, Faturamento, Lucro líquido), diagnósticos fixos que não pontuam mas guiam a decisão (Frequência = fadiga, Retenção de vídeo, Conversão de página), o `creative_id` de cada anúncio, e carimbo de data/horário** — versão heatmap em widget quando possível, ou markdown com marcadores 🟢🟡🔴 no texto. O `creative_id` é o identificador à prova de rótulo para decisões (promover/pausar), já que o nome do anúncio pode estar trocado.
 
-Os wireframes no chat são parte da entrega — renderize-os com a ferramenta de visualização; não os substitua por texto.
+Os wireframes no chat são parte da entrega — renderize-os com a ferramenta de visualização quando ela existir. Onde não houver ferramenta de visualização (Claude Code, API, alguns aplicativos), entregue os mesmos quadros como tabelas em markdown com 🟢🟡🔴 antes de cada valor, na mesma ordem, e diga numa linha que os gráficos ficaram de fora por falta da ferramenta.
 
 Para um passo a passo completo já preenchido, veja `references/exemplo-completo.md`.
 

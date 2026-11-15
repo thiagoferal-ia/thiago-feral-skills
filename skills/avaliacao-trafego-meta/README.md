@@ -2,7 +2,7 @@
 
 Skill para avaliar campanhas, conjuntos e anúncios de **venda direta** no Meta (Facebook/Instagram Ads), atribuindo nota de 0 a 10 e um veredito de ação — **escalar, manter, aguardar ou pausar**.
 
-Funciona para **qualquer produto e anunciante**: coleta os números do negócio numa entrevista rápida e **deriva os limiares de lucro automaticamente** (empate de ROAS/CPA a partir de ticket, líquido e imposto).
+Feita para **contas brasileiras (R$)** e **qualquer produto**: coleta os números do negócio numa entrevista rápida, em linguagem simples, e **deriva os limiares de lucro automaticamente** (empate de ROAS/CPA a partir de ticket, líquido e imposto).
 
 ## O que ela faz
 - Nota 0–10 (Resultado + Eficiência, com peso por fase) e veredito com guarda-corpos de segurança.

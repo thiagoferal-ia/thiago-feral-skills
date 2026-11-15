@@ -1,6 +1,6 @@
 # Funções de pontuação (0–10) e lógica do calculador
 
-Use estas funções quando precisar de notas numéricas precisas (não só o semáforo). Todas retornam um valor entre 0 e 10. `F` é o fator regional de CPM (padrão `F = 1`).
+Use estas funções quando precisar de notas numéricas precisas (não só o semáforo). Todas retornam um valor entre 0 e 10, e todas seguem os mesmos degraus: a fronteira 🔴/🟡 vale nota 3, a 🟡/🟢 vale nota 6 e a 🟢/⭐ vale nota 8. `F` é o fator de nicho caro para o CPM (padrão `F = 1`; ver SKILL.md, Passo 4).
 
 ## Métricas universais
 
@@ -22,9 +22,10 @@ se > 3,5:   nota = min(10, 8 + (CTR − 3,5) / 1,5 × 2)
 
 **Gancho 3s** (%, maior é melhor):
 ```
-se < 15:   nota = (gancho / 15) × 4
-se 15–25:  nota = 4 + (gancho − 15) / 10 × 3
-se > 25:   nota = min(10, 7 + (gancho − 25) / 15 × 3)
+se < 15:   nota = (gancho / 15) × 3
+se 15–25:  nota = 3 + (gancho − 15) / 10 × 3
+se 25–35:  nota = 6 + (gancho − 25) / 10 × 2
+se > 35:   nota = min(10, 8 + (gancho − 35) / 10 × 2)
 ```
 
 ## Métrica derivada do negócio
@@ -54,7 +55,7 @@ Resultado  = nota_ROAS
 
 pesos por fase (pela contagem de vendas):
   < 10 vendas  → R 0,25 · E 0,75
-  10–50 vendas → R 0,50 · E 0,50
+  10–49 vendas → R 0,50 · E 0,50
   ≥ 50 vendas  → R 0,70 · E 0,30
 
 Nota geral = Resultado × peso_R + Eficiência × peso_E
@@ -96,21 +97,25 @@ Abaixo de ~6 entidades, **não calibre**: use os cortes universais. **Recalibre 
 ## Cores do semáforo por nota
 
 ```
-nota ≥ 7 → verde
-nota 4–6,9 → amarelo
-nota < 4 → vermelho
+nota ≥ 6     → verde   (faixas 🟢 e ⭐)
+nota 3–5,9   → amarelo (faixa 🟡)
+nota < 3     → vermelho (faixa 🔴)
 ```
+
+Essas cores coincidem com as faixas das tabelas: uma métrica na faixa 🟢 nunca aparece amarela.
 
 ## Lógica do veredito (pseudocódigo)
 
 ```
-se vendas == 0 e investido ≥ 3 × CPA_empate:  "Pausar"        (stop-loss)
-senão se Eficiência < 3:                       "Pausar"        (criativo rejeitado)
-senão se vendas < 10:                          "Aguardar"      (amostra insuficiente)
+se vendas < 10 e investido ≥ (vendas + 3) × CPA_empate:  "Pausar"   (stop-loss)
+senão se vendas < 10 e Eficiência < 3:                     "Pausar"   (criativo rejeitado em teste)
+senão se vendas < 10:                                      "Aguardar" (amostra insuficiente)
 senão se ROAS < ROAS_empate:                   "Pausar/Reduzir"(perde dinheiro)
 senão se ROAS < ROAS_saudavel:                 "Manter/Otimizar"
 senão se vendas ≥ 50:                          "Escalar"
 senão:                                         "Quase lá"      (saudável, aprendendo)
 ```
+
+Com 10 vendas ou mais, Eficiência < 3 não muda o veredito: acrescenta o alerta "criativo cansando: prepare a troca" e impede "Escalar" (rebaixa para "Quase lá" ou mantém "Manter/Otimizar").
 
 A tendência (quando houver ≥ 3 dias na mesma direção) pode adiantar "Quase lá" → "Escalar" na subida, ou segurar um veredito de escala na queda.

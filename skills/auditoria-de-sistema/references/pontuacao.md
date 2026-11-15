@@ -121,6 +121,20 @@ O veredito é o **mínimo dos dois eixos, nunca a média**. Um sistema 9 em estr
 Com os dois eixos acima de 7,0, o veredito sobe de **pronto para os primeiros clientes** para **pronto
 para escalar**.
 
+### Quando o quadrante não sai
+
+O script recusa o veredito, em vez de dar um número bonito sem base, em três casos:
+
+| Caso | O que o script mostra | Por quê |
+|---|---|---|
+| Cobertura de qualquer eixo abaixo de **50%** | "indefinido: cobertura abaixo de 50%" | Com menos da metade dos itens verificados, a nota mede o que deu para olhar, não o sistema |
+| Eixo B sem a cadeia do fluxo crítico validada (sem `elos`) | "indefinido: eixo B incompleto" e o eixo B sem estágio | B4 pesa 3,0 de 12,0; sem ela, o eixo B é parcial (ver `team_questionnaire.md`) |
+| Achado **crítico confirmado**, com os dois eixos ≥ 5 | "Bloqueado por achado crítico confirmado" | Nenhuma média compensa uma exposição ativa; o sistema só fica pronto depois da correção |
+
+Crítico apenas **plausível** não bloqueia, mas o veredito sai "com ressalva" e aponta o código do
+achado a provar. No relatório, diga o que falta para o quadrante sair: quais respostas, qual acesso ou
+qual correção.
+
 ### A assimetria dos dois quadrantes errados
 
 Esta é a informação mais acionável da matriz, e vale dizê-la explicitamente no relatório:
@@ -170,7 +184,9 @@ de `scripts/pontuar.mjs`). A regra, para que a nota não seja inventada:
 3. Teto pela pior gravidade confirmada: com crítico, no máximo **3**; com alto, no máximo **5**; só
    médio ou baixo, no máximo **7**. Piso **1**.
 4. Categoria **não avaliada** a fundo nesta execução fica sem nota e com a marca "não avaliada", nunca
-   com 9 de graça.
+   com 9 de graça. No JSON, liste em `owasp_avaliadas` as categorias percorridas a fundo; a categoria
+   principal de um achado confirmado ou plausível conta como avaliada sem precisar listar. Toda outra
+   categoria sai "não avaliada" automaticamente.
 5. **Meta** é a mesma conta sem os achados dos horizontes imediato e próximo ciclo. A média das metas não
    passa de **9**: o último ponto é prática recorrente, não correção.
 

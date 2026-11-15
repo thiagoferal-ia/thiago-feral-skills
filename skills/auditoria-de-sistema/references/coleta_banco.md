@@ -7,6 +7,25 @@ confiável. Tudo aqui gera **candidatos**; a prova por papel é da Fase 4.
 As consultas abaixo são para Postgres com Supabase. Em outro banco, use as equivalentes (políticas de
 linha, permissões por papel, funções privilegiadas, objetos públicos).
 
+## Como pedir o acesso a quem não é técnico
+
+Muitos donos de sistema nunca deram acesso a ninguém. Passe o caminho mais simples que o ambiente
+permite, nesta ordem, e explique o porquê de cada cuidado:
+
+1. **Conector do Supabase no Claude** (o mais fácil): no Claude, em Configurações → Conectores, ative o
+   Supabase e entre com a conta dona do projeto. Peça para a pessoa dizer o **nome do projeto de
+   produção**, para você não auditar o de teste.
+2. **No Claude Code**, o MCP do Supabase em modo **somente leitura** (`--read-only`) e limitado ao projeto
+   (`--project-ref`). Assim, mesmo um erro não consegue alterar nada.
+3. **Token pessoal**, só se as opções acima não existirem: no painel do Supabase, Account → Access
+   Tokens → gerar um token com o nome "auditoria" (se a tela oferecer validade, escolha a mais curta). Ao fim da auditoria, a pessoa
+   **revoga o token** na mesma tela. Nunca peça a senha do banco nem a chave `service_role`.
+
+**Logs** (Fase 2, `coleta_producao.md`): sem conector, peça capturas de tela de Logs & Analytics no
+painel do Supabase (API, Postgres e Edge Functions) filtradas pelo período da auditoria, ou a
+exportação em CSV. Diga que pode haver dado pessoal nos logs e que ele não deve ser postado em lugar
+público.
+
 > **Pelo MCP**, `execute_sql` devolve só o resultado do **último** comando. Junte várias medidas num
 > único `SELECT json_build_object(...)` ou `json_agg(...)`. Pela API de consultas da Supabase
 > (`POST /v1/projects/<ref>/database/query` com o token da CLI) vale o mesmo cuidado. Se o MCP recusar
