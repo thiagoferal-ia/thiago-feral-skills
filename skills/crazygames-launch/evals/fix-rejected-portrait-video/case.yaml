@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: fix-rejected-portrait-video
+expected_outcome: |
+  Two upload-ready MP4s: portrait 1080x1620 and landscape 1920x1080, each at most 20 s, silent,
+  starting on the matching cover, saved in a folder. The reply (in Portuguese) explains what was wrong
+  (9:16 instead of 2:3, over 20 s, audio track) and was checked by inspecting the output.
+context:
+  scaffold_script: place-files.sh

@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: problem-build-review
+expected_outcome: |
+  A clear verdict that it will not pass as is, listing every blocking problem (zip upload and nested
+  folder, AdSense and GameDistribution, Google Play link and "more games" window, Firebase Google
+  sign-in, sitelock to another domain, absolute script path, custom fullscreen button) with fixes, and a
+  fixed copy of the build with those problems removed.
+context:
+  scaffold_script: place-files.sh

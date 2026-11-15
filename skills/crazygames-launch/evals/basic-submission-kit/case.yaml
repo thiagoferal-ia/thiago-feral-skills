@@ -1,0 +1,9 @@
+schema_version: "1.1"
+name: basic-submission-kit
+expected_outcome: |
+  A crazygames/ folder with the upload-ready build (index.html at its top, not zipped), a check report,
+  an English listing (category, up to 5 tags, plain-text description, controls) and a form-answers file
+  that goes through Upload, QA checklist and Details with a reason per answer, honest about what still
+  needs checking in the portal preview and on a phone. The reply is in Portuguese.
+context:
+  scaffold_script: place-files.sh

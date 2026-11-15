@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CrazyGames capture stage</title>
+<style>
+  html, body { margin: 0; background: #111; overflow: hidden; height: 100%; }
+  /* The iframe keeps its real size (the game sees exactly w x h CSS pixels);
+     only the on-screen preview is scaled to fit the window. */
+  #frame { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; background: #000; }
+  #hud { position: fixed; right: 8px; bottom: 8px; font: 12px system-ui, sans-serif; color: #fff;
+         background: rgba(0,0,0,.6); padding: 4px 8px; border-radius: 6px; pointer-events: none; }
+</style>
+</head>
+<body>
+<iframe id="frame" allow="autoplay; fullscreen; gamepad" ></iframe>
+<div id="hud"></div>
+<script>
+  // stage.html?w=1920&h=1080&src=/index.html
+  const q = new URLSearchParams(location.search);
+  const W = +(q.get('w') || 1920), H = +(q.get('h') || 1080);
+  const frame = document.getElementById('frame');
+  frame.width = W; frame.height = H;
+  frame.style.width = W + 'px'; frame.style.height = H + 'px';
+  frame.src = q.get('src') || '/index.html';
+  const fit = () => {
+    const k = Math.min(innerWidth / W, innerHeight / H, 1);
+    frame.style.transform = `scale(${k})`;
+    window.__stageScale = k;
+  };
+  addEventListener('resize', fit); fit();
+  document.getElementById('hud').textContent = `${W}×${H}`;
+</script>
+<script src="/__cg/recorder.js"></script>
+</body>
+</html>
