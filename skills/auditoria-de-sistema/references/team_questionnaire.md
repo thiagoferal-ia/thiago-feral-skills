@@ -5,6 +5,11 @@ bem abaixo disso no eixo B, que é majoritariamente externo ao repositório.
 
 Envie os dois blocos na **Fase 0**, antes de começar. As respostas chegam enquanto você analisa.
 
+**Time de uma ou duas pessoas, ou quem não é técnico:** comece pela **versão curta** do fim deste
+arquivo. São 10 perguntas que cobrem o que mais pesa na nota. Mande as demais só se a pessoa quiser
+aumentar a cobertura. Explique, junto com as perguntas, que "não sei" é uma resposta válida: o item sai
+como não verificado, sem virar zero.
+
 ## Como perguntar
 
 Peça **evidência, não opinião**. "Vocês testam a cópia de segurança?" recebe sim. "Qual foi a data da
@@ -114,5 +119,26 @@ honestidade no cabeçalho:
 Uma nota alta com cobertura baixa deve deixar o leitor desconfortável. É essa a intenção.
 
 **Uma exceção:** se a cadeia do fluxo crítico não puder ser validada com o usuário, não pontue B4 por
-conta própria. Reporte o eixo B como incompleto e diga exatamente o que falta. B4 pesa 3,0 de 12,0 —
+conta própria. O script já trata esse caso: sem `elos`, o eixo B sai incompleto e o quadrante fica
+indefinido. Reporte o eixo B como incompleto e diga exatamente o que falta. B4 pesa 3,0 de 12,0 —
 estimá-la sem validação produz um número que parece rigoroso e não é.
+
+---
+
+## Versão curta (time de 1 ou 2 pessoas)
+
+Em linguagem simples, uma pergunta por vez. Ao lado, o item que cada resposta alimenta.
+
+1. O que o sistema faz, para quem, e quantos clientes pagam hoje? *(Bloco 0)*
+2. Que tipo de dado de cliente fica guardado: nome, CPF, cartão, saúde, outro? *(Bloco 0, privacidade)*
+3. Você já restaurou uma cópia de segurança de verdade? Quando foi a última vez? *(A, continuidade)*
+4. Quando o sistema dá erro, como você fica sabendo: aviso automático ou reclamação do cliente? *(A, operação)*
+5. Além de você, quem consegue publicar uma versão nova ou mexer no banco de produção? *(A, entrega e acesso)*
+6. Descreva o dia do seu cliente usando o sistema, do começo ao fim. Em algum momento ele precisa sair para uma planilha, o WhatsApp ou falar com você? *(B4, fluxo crítico)*
+7. Algum cliente já completou esse ciclo inteiro sozinho, sem sua ajuda? *(B4)*
+8. Uma pessoa desconhecida consegue contratar e pagar sozinha, ou você precisa liberar? *(B, aquisição e receita)*
+9. Como o cliente pede ajuda, e como ele cancela ou leva os dados dele embora? *(B, confiança)*
+10. Você tem termos de uso e política de privacidade que o cliente aceita ao se cadastrar? *(B, conformidade e LGPD)*
+
+As respostas 6 e 7 bastam para montar e validar a cadeia do fluxo crítico com o usuário. Sem elas, o
+eixo B fica incompleto.

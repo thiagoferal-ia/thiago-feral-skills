@@ -20,14 +20,14 @@ varredura por comando, o conector dá o histórico.
 2. **Leia a árvore antes de buscar.** Liste a raiz e os diretórios de código, de migração, de CI e de
    documentação. A detecção de stack da Fase 0 sai dos arquivos de manifesto lidos um a um.
 3. **Traduza cada sonda de `coleta_repositorio.md`.** Padrão de texto vira busca de código; leitura dirigida
-   (os cinco caminhos da Fase 2) vira leitura de arquivo; o histórico vira a lista de commits e de PRs.
+   (os cinco caminhos da Fase 1) vira leitura de arquivo; o histórico vira a lista de commits e de PRs.
 4. **Busca vazia vale menos pelo conector.** A busca de código do GitHub usa um índice: cobre a branch
    padrão, ignora arquivos grandes e devolve resultado paginado. Antes de dar nota 0 por ausência, abra o
    arquivo onde o mecanismo estaria.
 5. **O que exige execução sai como não verificado.** Suíte de testes passando, tempo da suíte,
    vulnerabilidade em dependência e varredura de segredo no histórico completo. Se o conector oferecer
    varredura de segredos do próprio GitHub, use e diga que a fonte é essa. A prova de comportamento da
-   Fase 3 depende do ambiente ao vivo, não da via do repositório.
+   Fase 4 depende do ambiente ao vivo, não da via do repositório.
 
 ## No cabeçalho do relatório
 

@@ -152,7 +152,8 @@ nunca pelas telas que existem. Valide a cadeia com o usuário. B4 é o elo mais 
 `references/pontuacao.md` e `scripts/pontuar.mjs`. Itens 0 a 4 dos eixos A e B, travas, estágios,
 cruzamento e o placar OWASP derivado dos mesmos achados. Só achados confirmados e plausíveis contam;
 refutados, já conhecidos e escolhas registradas não pesam duas vezes (o já conhecido pesa no item dele,
-uma vez).
+uma vez). O script recusa o quadrante com cobertura abaixo de 50% ou com o eixo B incompleto, e não
+declara "pronto" com achado crítico confirmado. Quando isso acontecer, o relatório diz o que falta.
 
 ### Fase 7 · Relatório: diagnóstico no chat, visuais numa página publicada
 

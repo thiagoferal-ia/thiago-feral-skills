@@ -5,7 +5,7 @@ Demonstração ponta a ponta com números inventados, para ilustrar o fluxo. Pro
 ## Passo 1 — Config e derivação
 
 Respostas da entrevista:
-- Moeda: BRL · Ticket bruto: R$ 197 · Líquido por venda: R$ 180 · Imposto sobre mídia: 12% · Valor do pixel: R$ 197 · Margem: 30%
+- Ticket bruto: R$ 197 · Líquido por venda: R$ 180 · Imposto sobre mídia: 12% · Valor do pixel: R$ 197 · Margem: 30%
 
 Derivação:
 ```
@@ -40,16 +40,16 @@ Lucro real = 6×180 − 900×1,12 = 1080 − 1008 = +R$ 72
 
 Pontuação (funções de `pontuacao.md`):
 - CPM 30,00 → **9,0** (< 35)
-- Gancho 25,0% → **7,0** (limiar entre bom e excelente)
+- Gancho 25,0% → **6,0** (limiar entre 🟡 e 🟢)
 - CTR total 3,50% → **8,0**
 - ROAS 1,31 → dentro de 🟡 (empate 1,23, saudável 1,75): 3 + (1,31−1,23)/(1,75−1,23)×3 = **3,5** → Resultado 3,5
 - Frequência 1,25 → modificador **0**
 
 Composição (vídeo):
 ```
-Eficiência = média(CPM 9,0 · gancho 7,0) + 0 = 8,0
+Eficiência = média(CPM 9,0 · gancho 6,0) + 0 = 7,5
 Fase: 6 vendas < 10 → teste → pesos R 0,25 · E 0,75
-Nota geral = 3,5 × 0,25 + 8,0 × 0,75 = 0,875 + 6,0 = 6,9
+Nota geral = 3,5 × 0,25 + 7,5 × 0,75 = 0,875 + 5,625 = 6,5 → 🟢
 ```
 
 ## Passo 6 — Diagnósticos
@@ -59,7 +59,7 @@ Nota geral = 3,5 × 0,25 + 8,0 × 0,75 = 0,875 + 6,0 = 6,9
 
 ## Passo 7 — Veredito
 
-Percorrendo a árvore: vendas ≠ 0; Eficiência 8,0 ≥ 3; **vendas 6 < 10 → AGUARDAR**. Justificativa: amostra insuficiente; os sinais estáveis são fortes, então vale deixar o teste amadurecer antes de julgar a economia. Não escalar, não pausar.
+Percorrendo a árvore: stop-loss não bate (investido R$ 900 < (6 + 3) × 160,71 = R$ 1.446); Eficiência 7,5 ≥ 3; **vendas 6 < 10 → AGUARDAR**. Justificativa: amostra insuficiente; os sinais estáveis são fortes, então vale deixar o teste amadurecer antes de julgar a economia. Não escalar, não pausar.
 
 ## Passo 9 — Blocos de saída
 

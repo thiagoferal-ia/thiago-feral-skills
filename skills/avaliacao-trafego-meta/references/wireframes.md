@@ -77,7 +77,7 @@ Linha por entidade com Resultado, Eficiência, Nota geral (destacada) e o veredi
 
 Ferramenta em que o usuário digita os números de qualquer anúncio e recebe métricas, notas e veredito na hora. Renderize como widget HTML. **Parametrize as constantes com a config**: substitua `NET`, `TAX`, `GROSS`, `ROAS_EMP`, `ROAS_SAU`, `CPA_EMP` pelos valores derivados no Passo 1.
 
-Campos de entrada: Investido, Impressões, Alcance, Cliques no link, Vendas, Reproduções 3s (vídeo), Thruplays (vídeo).
+Campos de entrada: Formato (seletor vídeo/estático), Investido, Impressões, Alcance, Cliques totais, Cliques no link, Vendas, Reproduções 3s (vídeo), Thruplays (vídeo). Com "estático", esconda os dois campos de vídeo.
 
 Miolo do script (as funções de pontuação estão em `pontuacao.md`; a lógica de veredito também). Estrutura:
 ```javascript
@@ -85,9 +85,9 @@ var NET=[liquido], TAX=[1+imposto], GROSS=[valor_pixel];
 var ROAS_EMP=[roas_empate], ROAS_SAU=[roas_saudavel], CPA_EMP=[cpa_empate];
 // ler inputs -> calcular métricas (Passo 3 do SKILL.md)
 // pontuar (funções de pontuacao.md, com ROAS_EMP/ROAS_SAU nas faixas de ROAS)
-// Eficiência = média(CPM, gancho) + modificador de frequência
+// Eficiência = vídeo: média(CPM, gancho) · estático: média(CPM, CTR total) — + modificador de frequência
 // pesos por fase pela contagem de vendas -> Nota geral
-// veredito pela árvore (pontuacao.md), usando CPA_EMP no stop-loss (3×CPA_EMP)
+// veredito pela árvore (pontuacao.md), usando CPA_EMP no stop-loss ((vendas+3)×CPA_EMP, só com vendas < 10)
 // renderizar: chips de métrica + 3 notas + badge de veredito com justificativa
 ```
 Pré-preencha os campos com um exemplo para o widget já renderizar algo ao abrir. Formate números com arredondamento (evita dízimas). Mantenha fundo transparente e sem `position: fixed`.
@@ -99,7 +99,6 @@ Pré-preencha os campos com um exemplo para o widget já renderizar algo ao abri
 Ao final, ofereça este bloco para o usuário salvar:
 ```markdown
 # Config da operação — [nome do produto]
-- Moeda: [ex. BRL]
 - Ticket bruto: [valor]
 - Líquido por venda: [valor]
 - Imposto sobre mídia: [%]
@@ -116,7 +115,7 @@ Ao final, ofereça este bloco para o usuário salvar:
 
 Gere ao final de cada análise. Numa próxima sessão, o usuário cola de volta e a skill recupera a tendência sem reprocessar.
 
-**O snapshot leva farol em CADA métrica e inclui as colunas financeiras + diagnósticos + o `creative_id`.** Em arquivo `.md`, use os marcadores 🟢 (bom) · 🟡 (atenção) · 🔴 (ruim) antes de cada valor. As cores de CPM, gancho e CTR usam as faixas de engajamento (calibradas se houver; Passo 1B); CPA e ROAS usam a economia (empate/saudável); Lucro líquido é 🟢 se positivo / 🔴 se negativo; Vendas usa a confiança (< 10 🔴 · 10–50 🟡 · ≥ 50 🟢). Regra de cor por banda: ⭐/🟢 → 🟢 · 🟡 → 🟡 · 🔴 → 🔴. Colunas financeiras: **Investido** (gasto de mídia do Gerenciador), **Faturamento** (vendas × ticket bruto), **Lucro líquido** (vendas × líquido − investido × (1+imposto)).
+**O snapshot leva farol em CADA métrica e inclui as colunas financeiras + diagnósticos + o `creative_id`.** Em arquivo `.md`, use os marcadores 🟢 (bom) · 🟡 (atenção) · 🔴 (ruim) antes de cada valor. As cores de CPM, gancho e CTR usam as faixas de engajamento (calibradas se houver; Passo 1B); CPA e ROAS usam a economia (empate/saudável); Lucro líquido é 🟢 se positivo / 🔴 se negativo; Vendas usa a confiança (< 10 🔴 · 10–49 🟡 · ≥ 50 🟢). Regra de cor por banda: ⭐/🟢 → 🟢 · 🟡 → 🟡 · 🔴 → 🔴. Colunas financeiras: **Investido** (gasto de mídia do Gerenciador), **Faturamento** (vendas × ticket bruto), **Lucro líquido** (vendas × líquido − investido × (1+imposto)).
 
 Diagnósticos fixos na tabela (não pontuam, mas guiam a decisão): **Freq** (frequência — 🟢<2,5 · 🟡2,5–3,5 · 🔴>3,5; sinal de fadiga/saturação), **Reten** (retenção de vídeo = thruplay÷gancho — 🔴<15% · 🟡15–30% · 🟢>30%), **Conv.pág** (conversão de página = vendas÷cliques no link — 🔴<2% · 🟡2–4% · 🟢>4%, com ‼️ acima de 8% = atribuição possivelmente inflada). O **`creative_id`** vai como última coluna — é o identificador à prova de rótulo (o nome do anúncio pode estar trocado; o creative_id não). O CTR de link é opcional na tabela principal (puxe no farol detalhado quando for decidir sobre um criativo específico).
 

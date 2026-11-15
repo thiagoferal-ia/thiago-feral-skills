@@ -16,11 +16,16 @@
 //     { "codigo": "C1", "veredito": "confirmado", "gravidade": "critico",
 //       "owasp": ["A01", "A02"], "horizonte": "imediato" }
 //   ],
-//   "owasp_nao_avaliadas": ["A03"]
+//   "owasp_avaliadas": ["A01", "A02", "A05", "A07"]
 // }
 // Achado: veredito "confirmado" ou "plausivel" (os demais não pesam); gravidade "critico", "alto",
 // "medio" ou "baixo"; owasp com a categoria principal primeiro; horizonte "imediato", "proximo" ou
-// "continuo". Sem "achados", o placar OWASP não é calculado.
+// "continuo". "owasp_avaliadas" lista as categorias percorridas a fundo nesta execução; a categoria
+// principal de um achado confirmado ou plausível conta como avaliada sozinha. Categoria fora das duas
+// fica "não avaliada", sem nota (nunca 9 de graça). Sem "achados" nem "owasp_avaliadas", o placar
+// OWASP não é calculado.
+// Quadrante: sai "indefinido" se algum eixo tiver cobertura abaixo de 50% ou se o eixo B estiver
+// incompleto (sem "elos"); e nunca sai "Pronto" com achado crítico confirmado.
 // Nota de item e de elo: inteiro de 0 a 4. "nv" = não verificado (sai da nota e reduz a
 // cobertura). "na" = não aplicável (sai da nota e da cobertura). Item que não aparece conta
 // como "nv". Sem "elos", B4 não é pontuada: a cadeia precisa estar validada com o usuário.
@@ -54,6 +59,8 @@ const EIXOS = {
       [3, 'B2 · Demonstrável'], [0, 'B1 · Conceito']],
   },
 };
+
+const COBERTURA_MINIMA = 0.5;
 
 const eNota = (v) => Number.isInteger(v) && v >= 0 && v <= 4;
 
@@ -136,13 +143,26 @@ function eixo(chave, entrada) {
   const media = somaW ? somaP / somaW : null;
   const teto = travas.length ? Math.min(...travas.map((t) => t.teto)) : null;
   const nota = media === null ? null : teto === null ? media : Math.min(media, teto);
-  const estagio = nota === null ? null : cfg.estagios.find(([min]) => nota >= min)[1];
-  return { nota, media, teto, travas, estagio, cobertura: apl ? pont / apl : 0, dims };
+  // Eixo B sem a cadeia validada (sem "elos") fica incompleto: nota parcial, sem estágio.
+  const incompleto = chave === 'B' && !Object.keys(entrada.elos ?? {}).length;
+  const estagio = nota === null || incompleto ? null : cfg.estagios.find(([min]) => nota >= min)[1];
+  return { nota, media, teto, travas, estagio, incompleto, cobertura: apl ? pont / apl : 0, dims };
 }
 
-function quadrante(a, b) {
+function quadrante(A, B, achados) {
+  const a = A.nota, b = B.nota;
   if (a === null || b === null) return 'indefinido: falta a nota de um dos eixos';
-  if (a >= 5 && b >= 5) return a >= 7 && b >= 7 ? 'Pronto para escalar' : 'Pronto para os primeiros clientes';
+  if (B.incompleto) return 'indefinido: eixo B incompleto (o fluxo crítico não foi validado com o usuário, B4 sem nota)';
+  if (A.cobertura < COBERTURA_MINIMA || B.cobertura < COBERTURA_MINIMA) {
+    return `indefinido: cobertura abaixo de ${pct(COBERTURA_MINIMA)} (A ${pct(A.cobertura)}, B ${pct(B.cobertura)}); faltam respostas do time ou acesso`;
+  }
+  if (a >= 5 && b >= 5) {
+    const criticos = achados.filter((x) => x.gravidade === 'critico' && x.veredito === 'confirmado').map((x) => x.codigo);
+    if (criticos.length) return `Bloqueado por achado crítico confirmado (${criticos.join(', ')}): corrigir antes de receber clientes`;
+    const base = a >= 7 && b >= 7 ? 'Pronto para escalar' : 'Pronto para os primeiros clientes';
+    const plaus = achados.filter((x) => x.gravidade === 'critico' && x.veredito === 'plausivel').map((x) => x.codigo);
+    return plaus.length ? `${base}, com ressalva: crítico plausível a provar (${plaus.join(', ')})` : base;
+  }
   if (a >= 5) return 'Fundação sem porta';
   if (b >= 5) return 'Casa sem alicerce';
   return 'Canteiro de obras';
@@ -170,7 +190,7 @@ function notaDaCategoria(cat, achados) {
   return Math.max(1, nota);
 }
 
-function placarOwasp(achados, naoAvaliadas) {
+function placarOwasp(achados, avaliadasDeclaradas) {
   for (const a of achados) {
     if (!['confirmado', 'plausivel', 'refutado', 'conhecido', 'escolha'].includes(a.veredito)) {
       throw new Error(`achado ${a.codigo}: veredito inválido ${JSON.stringify(a.veredito)}`);
@@ -182,9 +202,13 @@ function placarOwasp(achados, naoAvaliadas) {
   }
   const pesam = achados.filter((a) => a.veredito === 'confirmado' || a.veredito === 'plausivel');
   const restam = pesam.filter((a) => a.horizonte === 'continuo');
+  for (const c of avaliadasDeclaradas) {
+    if (!CATEGORIAS.includes(c)) throw new Error(`owasp_avaliadas: categoria inválida ${JSON.stringify(c)} (use A01 a A10)`);
+  }
+  const avaliadas = new Set([...avaliadasDeclaradas, ...pesam.map((a) => a.owasp[0])]);
   const categorias = {};
   for (const cat of CATEGORIAS) {
-    if (naoAvaliadas.includes(cat)) {
+    if (!avaliadas.has(cat)) {
       categorias[cat] = { atual: null, meta: null, achados: [] };
       continue;
     }
@@ -194,8 +218,8 @@ function placarOwasp(achados, naoAvaliadas) {
       achados: pesam.filter((a) => a.owasp.includes(cat)).map((a) => a.codigo),
     };
   }
-  const avaliadas = Object.values(categorias).filter((c) => c.atual !== null);
-  const media = (k) => (avaliadas.length ? avaliadas.reduce((s, c) => s + c[k], 0) / avaliadas.length : null);
+  const comNota = Object.values(categorias).filter((c) => c.atual !== null);
+  const media = (k) => (comNota.length ? comNota.reduce((s, c) => s + c[k], 0) / comNota.length : null);
   return { categorias, atual: media('atual'), meta: media('meta') === null ? null : Math.min(9, media('meta')) };
 }
 
@@ -207,30 +231,33 @@ if (!arquivo) {
   console.error('uso: node scripts/pontuar.mjs notas.json [--json]');
   process.exit(1);
 }
-let A, B;
+let resultado;
 try {
   const entrada = JSON.parse(readFileSync(arquivo, 'utf8'));
-  A = eixo('A', entrada.A ?? {});
-  B = eixo('B', entrada.B ?? {});
+  if ('owasp_nao_avaliadas' in entrada) {
+    throw new Error('"owasp_nao_avaliadas" saiu do formato: liste em "owasp_avaliadas" as categorias percorridas a fundo');
+  }
+  const A = eixo('A', entrada.A ?? {});
+  const B = eixo('B', entrada.B ?? {});
+  const achados = entrada.achados ?? [];
+  resultado = { A, B };
+  if (entrada.achados || entrada.owasp_avaliadas) {
+    resultado.owasp = placarOwasp(achados, entrada.owasp_avaliadas ?? []);
+  }
+  resultado.quadrante = quadrante(A, B, achados);
 } catch (erro) {
   console.error(`erro: ${erro.message}`);
   process.exit(1);
 }
-const resultado = { A, B, quadrante: quadrante(A.nota, B.nota) };
-try {
-  const entrada = JSON.parse(readFileSync(arquivo, 'utf8'));
-  if (entrada.achados) resultado.owasp = placarOwasp(entrada.achados, entrada.owasp_nao_avaliadas ?? []);
-} catch (erro) {
-  console.error(`erro: ${erro.message}`);
-  process.exit(1);
-}
+const { A, B } = resultado;
 
 if (bandeira === '--json') {
   console.log(JSON.stringify(resultado, null, 2));
 } else {
   for (const [chave, r] of [['A', A], ['B', B]]) {
     const travado = r.teto !== null && r.media !== null && r.media > r.teto;
-    console.log(`Eixo ${chave}: ${num(r.nota)} · ${r.estagio ?? 'sem estágio'} · cobertura ${pct(r.cobertura)}`);
+    const estagio = r.incompleto ? 'incompleto, nota parcial' : r.estagio ?? 'sem estágio';
+    console.log(`Eixo ${chave}: ${num(r.nota)} · ${estagio} · cobertura ${pct(r.cobertura)}`);
     if (travado) console.log(`  média ${num(r.media)}, travada em ${num(r.teto)}`);
     for (const t of r.travas) console.log(`  trava: ${t.trava} (teto ${num(t.teto)})`);
     for (const [dim, d] of Object.entries(r.dims)) {
