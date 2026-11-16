@@ -1,0 +1,145 @@
+{
+  "titulo": "Juice Sort — relatório de telemetria",
+  "titulo_curto": "Telemetria Juice Sort",
+  "sobretitulo": "Playgama · catálogo",
+  "subtitulo": "Primeiros 4 dias no catálogo (13 a 16/11/2026). Dados até 16/11 ~14:30 (Brasília); o dia 16 ainda está aberto.",
+  "etiquetas": ["v0.1.25 no ar desde 15/11 18:19", "490 usuários", "551 sessões", "Receita: fora do MCP"],
+  "destaque": {
+    "rotulo": "Voltam no dia seguinte",
+    "valor": "~3%",
+    "contexto": "Estimado pela sobreposição de usuários entre os dias. Jogos casuais saudáveis ficam entre 20% e 30%: é o que mais limita a receita hoje.",
+    "tendencia": [39, 13, 14, 16, 3, 3, 0, 4, 11, 13, 25, 48, 13, 15, 101, 157, 152, 103],
+    "tendencia_x": ["30/10", "31/10", "01/11", "02/11", "03/11", "04/11", "05/11", "06/11", "07/11", "08/11", "09/11", "10/11", "11/11", "12/11", "13/11", "14/11", "15/11", "16/11*"],
+    "rotulo_tendencia": "usuários por dia",
+    "marcos": [{ "x": "13/11", "rotulo": "Catálogo" }]
+  },
+  "secoes": [
+    {
+      "titulo": "Resumo",
+      "blocos": [
+        { "tipo": "kpis", "itens": [
+          { "rotulo": "Usuários por dia", "valor": "~150", "nota": "13 a 16/11", "tendencia": [100, 155, 146, 103] },
+          { "rotulo": "Sessões que chegam a 60s", "valor": "80%", "nota": "das sessões com jogo pronto", "tendencia": [77.7, 81.8, 82.3, 76.9], "formato_tendencia": "pct" },
+          { "rotulo": "Falha de intersticial", "valor": "24%", "delta": "12% no dia 16", "direcao": "down", "bom": true, "tendencia": [27.4, 23.7, 26.5, 12.4], "formato_tendencia": "pct" },
+          { "rotulo": "Usuários com rewarded", "valor": "17%", "delta": "meta 30–40%", "direcao": "down", "bom": false }
+        ]},
+        { "tipo": "grade", "colunas": 2, "blocos": [
+          { "tipo": "alerta", "nivel": "critico", "titulo": "Retenção é a prioridade nº 1", "md": "Quase ninguém volta no dia seguinte. Com ~150 usuários/dia, a receita só cresce se mais gente voltar." },
+          { "tipo": "alerta", "nivel": "atencao", "rotulo": "Hipótese", "titulo": "Queda de tráfego hoje a partir das 9h", "md": "Entre 9h e 15h vieram **7 sessões**, contra ~50 no mesmo horário dos dias anteriores. Pode ser o fim do destaque de lançamento no catálogo." }
+        ]}
+      ]
+    },
+    {
+      "titulo": "Tráfego",
+      "blocos": [
+        { "tipo": "area", "titulo": "Usuários por dia desde a criação", "subtitulo": "Antes do catálogo, quase só testes", "x": ["30/10", "31/10", "01/11", "02/11", "03/11", "04/11", "05/11", "06/11", "07/11", "08/11", "09/11", "10/11", "11/11", "12/11", "13/11", "14/11", "15/11", "16/11*"],
+          "series": [{ "nome": "Usuários", "valores": [39, 13, 14, 16, 3, 3, 0, 4, 11, 13, 25, 48, 13, 15, 101, 157, 152, 103] }],
+          "marcos": [{ "x": "13/11", "rotulo": "Catálogo" }], "unidade": "usuários", "eixo_x": "Dia", "nota": "* dia 16 parcial." },
+        { "tipo": "mapa_calor", "titulo": "Quando as pessoas jogam", "subtitulo": "Sessões por faixa de 3 horas (Brasília)",
+          "linhas": ["13/11", "14/11", "15/11", "16/11"], "colunas": ["0h", "3h", "6h", "9h", "12h", "15h", "18h", "21h"],
+          "valores": [[null, null, null, 11, 35, 30, 24, 19], [17, 18, 21, 32, 23, 19, 26, 18], [19, 19, 22, 29, 21, 19, 16, 26], [18, 38, 17, 4, 3, null, null, null]],
+          "unidade": "sessões", "nota": "Cinza: antes da publicação (13/11) ou horas que ainda não aconteceram (16/11). A faixa das 12h do dia 16 está parcial." }
+      ]
+    },
+    {
+      "titulo": "Entrada no jogo",
+      "blocos": [
+        { "tipo": "grade", "colunas": 2, "blocos": [
+          { "tipo": "funil", "titulo": "Do carregamento a 1 minuto de jogo", "subtitulo": "Sessões, 13 a 16/11",
+            "etapas": [{ "rotulo": "Início", "valor": 551 }, { "rotulo": "Jogo pronto", "valor": 534 }, { "rotulo": "30s de jogo", "valor": 477 }, { "rotulo": "60s de jogo", "valor": 428 }] },
+          { "tipo": "funil", "titulo": "Tutorial", "subtitulo": "Sessões que começaram o tutorial",
+            "etapas": [{ "rotulo": "Iniciado", "valor": 479 }, { "rotulo": "Concluído", "valor": 427 }],
+            "nota": "27 desistências com quase 0 despejos (mediana de 19s): saíram antes de interagir." }
+        ]}
+      ]
+    },
+    {
+      "titulo": "Progressão e dificuldade",
+      "blocos": [
+        { "tipo": "faixas", "titulo": "Em que nível cada coisa acontece", "subtitulo": "Faixa do nível (step_index) entre p10 e p90, com a mediana",
+          "itens": [
+            { "rotulo": "Começa um nível", "p10": 1, "p50": 5, "p90": 20 },
+            { "rotulo": "Conclui", "p10": 1, "p50": 4, "p90": 17 },
+            { "rotulo": "Reinicia (falha)", "p10": 4, "p50": 14, "p90": 31 },
+            { "rotulo": "Fica travado", "p10": 9, "p50": 18, "p90": 36 },
+            { "rotulo": "Abandona", "p10": 1, "p50": 6, "p90": 20 }
+          ], "nota": "Travamentos se concentram entre os níveis 9 e 36: é onde a curva aperta." },
+        { "tipo": "grade", "colunas": 2, "blocos": [
+          { "tipo": "barras", "titulo": "Níveis iniciados por tipo", "orientacao": "h",
+            "categorias": ["normal", "hidden", "frozen", "bonus", "boss", "timed", "key", "Outros"],
+            "series": [{ "nome": "Inícios", "valores": [2084, 257, 228, 181, 145, 127, 107, 262] }], "eixo_categoria": "Tipo",
+            "nota": "Outros: hard, limit, oil, slush, fizz, honey." },
+          { "tipo": "segmentos", "titulo": "Como o jogador abandona o nível", "partes": [{ "rotulo": "Saiu da aba/site", "valor": 198 }, { "rotulo": "Voltou ao menu", "valor": 39 }],
+            "nota": "Mediana de 0 movimentos antes de sair." }
+        ]}
+      ]
+    },
+    {
+      "titulo": "Anúncios",
+      "blocos": [
+        { "tipo": "grade", "colunas": 2, "blocos": [
+          { "tipo": "barras_empilhadas", "titulo": "Intersticiais por dia", "orientacao": "v", "categorias": ["13/11", "14/11", "15/11", "16/11*"],
+            "series": [{ "nome": "Abertos", "valores": [175, 332, 328, 141] }, { "nome": "Falharam", "valores": [66, 103, 118, 20] }] },
+          { "tipo": "linha", "titulo": "Taxa de falha do intersticial", "subtitulo": "falhos ÷ (abertos + falhos)", "x": ["13/11", "14/11", "15/11", "16/11*"],
+            "series": [{ "nome": "Falha", "valores": [27.4, 23.7, 26.5, 12.4] }], "formato": "pct", "y_min": 0, "unidade": "de falha",
+            "marcos": [{ "x": "16/11*", "rotulo": "v0.1.25" }] }
+        ]},
+        { "tipo": "metas", "titulo": "Onde estamos em relação às metas", "itens": [
+          { "rotulo": "Usuários que assistem rewarded", "valor": 17, "meta": 30 },
+          { "rotulo": "Falha de intersticial", "valor": 24, "meta": 12, "menor_melhor": true, "maximo": 40 },
+          { "rotulo": "Sessões que chegam a 60s", "valor": 80, "meta": 85 },
+          { "rotulo": "Rewarded assistidos até o fim", "valor": 78, "nota": "sem meta definida" }
+        ]}
+      ]
+    },
+    {
+      "titulo": "Versões",
+      "blocos": [
+        { "tipo": "halteres", "titulo": "Dia 14 (v0.1.23/0.1.24) × dia 16 (v0.1.25)", "subtitulo": "Preliminar: o dia 16 ainda está aberto", "rotulos_series": ["14/11", "16/11"],
+          "itens": [
+            { "rotulo": "Falha de intersticial", "antes": 23.7, "depois": 12.4, "menor_melhor": true },
+            { "rotulo": "Sessões que chegam a 60s", "antes": 81.8, "depois": 76.9 },
+            { "rotulo": "Sessões com abandono de nível", "antes": 24.1, "depois": 32.7, "menor_melhor": true },
+            { "rotulo": "Usuários com rewarded", "antes": 11.6, "depois": 10.7 }
+          ], "nota": "Menos falhas de anúncio, mas mais abandono: confirmar após as 23h, com o dia 16 fechado." },
+        { "tipo": "linha_do_tempo", "titulo": "Linha do tempo", "itens": [
+          { "quando": "30/10", "oque": "Jogo criado + campanha grátis de tráfego", "detalhe": "Gastou 7% do orçamento; 4% da meta" },
+          { "quando": "13/11 10:50", "oque": "Publicado no catálogo", "status": "bom" },
+          { "quando": "15/11 01:01", "oque": "v0.1.24 enviada" },
+          { "quando": "15/11 18:19", "oque": "v0.1.25 no ar", "detalhe": "Ajustes de anúncio", "status": "info" },
+          { "quando": "16/11 9h", "oque": "Tráfego cai", "detalhe": "7 sessões entre 9h e 15h", "status": "atencao" }
+        ]}
+      ]
+    },
+    {
+      "titulo": "Performance e erros",
+      "blocos": [
+        { "tipo": "kpis", "itens": [
+          { "rotulo": "FPS mediano", "valor": "60", "nota": "meta 60" },
+          { "rotulo": "FPS das 10% piores amostras", "valor": "30", "nota": "aparelhos fracos ou economia de bateria" },
+          { "rotulo": "Travadas acima de 250 ms", "valor": "0" },
+          { "rotulo": "Sessões com amostra", "valor": "464", "nota": "volume confiável (≥ 30)" }
+        ]},
+        { "tipo": "barras", "titulo": "Erros JavaScript por código", "subtitulo": "Usuários afetados (v0.1.24 e v0.1.25)", "orientacao": "h",
+          "categorias": ["539e", "e242", "2d91", "3dc6", "7e28"], "series": [{ "nome": "Usuários", "valores": [13, 4, 2, 1, 1] }] }
+      ]
+    },
+    {
+      "titulo": "Plano",
+      "blocos": [
+        { "tipo": "esquema", "titulo": "Fases da atualização", "etapas": [
+          { "rotulo": "Medir v0.1.25", "detalhe": "16/11 após 23h", "status": "atencao", "status_texto": "Hoje", "seta": "1 dia" },
+          { "rotulo": "Fase 1", "detalhe": "Anúncios, avisos fixos, nome, telemetria", "seta": "1 dia" },
+          { "rotulo": "Fase 2", "detalhe": "Rewarded, baú, economia", "seta": "1 dia" },
+          { "rotulo": "Fase 3", "detalhe": "Visual 3D, coleção, subjogos" }
+        ]},
+        { "tipo": "recomendacoes", "titulo": "Recomendações", "itens": [
+          { "prioridade": 1, "acao": "Tirar o intersticial do começo do nível; só vitória, derrota e reinício", "evidencia": "84% dos abandonos saem da aba com 0 movimentos", "metrica": "Abandono com 0 movimentos", "como_medir": "progression_abandoned + ad_requested por versão" },
+          { "prioridade": 2, "acao": "Dar motivos para voltar: desafio diário e presente bem visíveis", "evidencia": "Retorno ~3%", "metrica": "D1 via return_visit", "como_medir": "return_visit.days_since_last" },
+          { "prioridade": 3, "acao": "Lançar as ofertas de rewarded aprovadas", "evidencia": "17% dos usuários vs 30–40%", "metrica": "Adesão ao rewarded", "como_medir": "rewarded_offer_result" }
+        ]}
+      ]
+    }
+  ],
+  "rodape": "Fonte: telemetria Playgama via MCP (pré-agregada). Receita não está disponível no MCP. Taxas por dia calculadas com sessões de jogo pronto como denominador."
+}

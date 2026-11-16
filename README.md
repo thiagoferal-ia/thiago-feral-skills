@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-2ea44f" alt="MIT">
-  <img src="https://img.shields.io/badge/skills-4-4698CA" alt="skills">
+  <img src="https://img.shields.io/badge/skills-5-4698CA" alt="skills">
   <img src="https://img.shields.io/badge/formato-SKILL.md-FF5724" alt="SKILL.md">
   <img src="https://img.shields.io/badge/Claude-Web%20%2B%20Code-8A63D2" alt="Claude Web + Code">
   <a href="https://thiagoferal.com"><img src="https://img.shields.io/badge/site-thiagoferal.com-111111" alt="thiagoferal.com"></a>
