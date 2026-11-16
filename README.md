@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-2ea44f" alt="MIT">
-  <img src="https://img.shields.io/badge/skills-5-4698CA" alt="skills">
+  <img src="https://img.shields.io/badge/skills-6-4698CA" alt="skills">
   <img src="https://img.shields.io/badge/formato-SKILL.md-FF5724" alt="SKILL.md">
   <img src="https://img.shields.io/badge/Claude-Web%20%2B%20Code-8A63D2" alt="Claude Web + Code">
   <a href="https://thiagoferal.com"><img src="https://img.shields.io/badge/site-thiagoferal.com-111111" alt="thiagoferal.com"></a>
@@ -42,6 +42,7 @@ sem você precisar "chamá-las" — embora você sempre possa pedir explicitamen
 |---|---|---|---|
 | [**auditoria-de-sistema**](skills/auditoria-de-sistema/) | Auditoria de segurança e prontidão: OWASP ASVS, API Security Top 10, **banco ao vivo** e **logs de produção**, com verificação obrigatória de cada achado. Pontua estrutura (A) e produto (B) de 0 a 10, placar OWASP Top 10 e veredito "pronto para clientes?". Tem modo de reauditoria. | Web · Claude Code | Repositório; banco e logs de produção (recomendado) |
 | [**avaliacao-trafego-meta**](skills/avaliacao-trafego-meta/) | Nota de 0 a 10 e veredito (escalar, manter, aguardar ou pausar) para campanhas, conjuntos e anúncios de **venda direta** no Meta Ads, com limiares de lucro derivados dos números do negócio. | Web · Claude Code | Dados das campanhas |
+| [**compor-musica-suno**](skills/compor-musica-suno/) | Cria músicas no **Suno (v6)** do zero ou conserta faixas já geradas, em qualquer gênero e idioma: briefing, letra com tradução, ficha pronta para colar (Styles, Exclude, tags, configurações), 8 tipos de abertura, guia de gêneros brasileiros e diagnóstico de problemas (intro longa, voz abafada, gênero errado, moderação). Gera direto se o Suno MCP estiver conectado. | Web · Claude Code | Conta no Suno; Suno MCP opcional |
 | [**crazygames-launch**](skills/crazygames-launch/) | Leva **qualquer jogo web** (Phaser, Three.js, Unity WebGL, Godot, Construct…) até a **CrazyGames**: verifica build e SDK v3 pelas regras atuais, prepara a pasta de envio (o portal recusa zip), faz as 3 capas e os 2 vídeos nos tamanhos exigidos (retrato 2:3), escreve a ficha da loja e responde cada campo do formulário e do QA, para Basic e Full launch. | Claude Code | Node 18+ e ffmpeg; navegador opcional para gravar |
 | [**music-master**](skills/music-master/) | Masterização por gênero, volume padronizado (LUFS/pico real), comparação A/B nivelada, organização de álbum (renumeração, tags, gênero por faixa, capa) e exportação WAV/MP3 para YouTube, streaming ou distribuidora. Qualquer gênero e origem (Suno, DAW…). | Claude Code | Node 18+ e ffmpeg |
 | [**playgama-telemetria**](skills/playgama-telemetria/) | Análise completa da **telemetria de um jogo na Playgama** pelo MCP do Developer Console: tráfego, retenção, funil, progressão, anúncios, performance, erros e comparação entre versões. Audita o que falta instrumentar e entrega um **relatório visual** (página HTML com gráficos interativos) com recomendações priorizadas. Só lê, nunca publica. | Web · Claude Code | MCP da Playgama; Node 18+ para a página |
